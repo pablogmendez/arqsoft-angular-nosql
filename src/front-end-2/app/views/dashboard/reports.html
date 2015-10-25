@@ -1,0 +1,33 @@
+<div> 
+	<a ui-sref=login class="pull-right btn btn-primary btn-outline btn-rounded">Salir</a> 
+	<h2>Inscripciones </h2>
+	<div class="opciones">
+		<span>Complete los parámetros de la búsqueda</span> 
+		<br><br><br>
+		<form name="parametrosBusqueda" action="#" ng-submit="submitForm()">
+			<div ng-controller="AnioCtrl">
+			<span>Seleccione Año :</span> 
+			<select name="repeatSelect" id="repeatSelect" ng-model="data.repeatSelect" style="position:fixed; left:450px">
+      				<option ng-repeat="option in data.availableOptions" value="{{option.id}}">{{option.name}}</option>
+    			</select>
+			</div>			
+			<br>
+			<div ng-controller="CuatriCtrl">
+			<span>Seleccione Cuatrimestre :</span> 
+			<select name="repeatSelect" id="repeatSelect" ng-model="data.repeatSelect" style="position:fixed; left:450px">
+      				<option ng-repeat="option in data.availableOptions" value="{{option.id}}">{{option.name}}</option>
+    			</select>
+			</div>
+			<br>
+			<div ng-controller="MateriaCtrl">
+			<span>Seleccione Materia :</span> 
+			<select name="repeatSelect" id="repeatSelect" ng-model="data.repeatSelect" style="position:fixed; left:450px">
+      				<option ng-repeat="option in data.availableOptions" value="{{option.id}}">{{option.name}}</option>
+    			</select>
+			</div>
+			<br>
+			<input type="submit" id="submit" value="Buscar Inscripciones" />
+		</form>
+	</div>
+  <script src="../../scripts/scripts.js"></script>  
+</div>

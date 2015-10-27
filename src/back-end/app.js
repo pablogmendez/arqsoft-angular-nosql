@@ -14,7 +14,9 @@ app.get('/', function(req, res) {
   res.send("Hello world!");
 });
 
-mongoose.connect('mongodb://localhost/tvshows', function(err, res) {
+require('./routes')(app);
+
+mongoose.connect('mongodb://localhost/courses', function(err, res) {
   if (err) {
     console.log('ERROR: connecting to Database. ' + err);
   } else {

@@ -1,11 +1,11 @@
 <div> 
-	<h2>Consultas</h2>
+	<h2>Inscripciones</h2>
 	<div class="opciones">
-		<span>Complete los parámetros de la búsqueda</span> 
+		<span>Complete los datos de inscripcion</span> 
 		<br><br><br>
-		<form name="parametrosBusqueda" action="#" ng-submit="submitForm()">
+		<form name="parametrosInscripcion" action="#" ng-submit="submitForm()">
 			<div ng-controller="AnioCtrl">
-			<span>Seleccione Año :</span> 
+			<span>Seleccione A�o :</span> 
 			<select name="repeatSelect" id="repeatSelect" ng-model="data.repeatSelect" style="position:fixed; left:450px">
       				<option ng-repeat="option in data.availableOptions" value="{{option.id}}">{{option.name}}</option>
     			</select>
@@ -25,8 +25,8 @@
     			</select>
 			</div>
 			<br><br>
-			<a ui-sref=results class="pull-right btn btn-primary btn-outline btn-rounded" style="position:fixed; left:250px">Buscar inscripciones</a> 
 		</form>
+			<a ui-sref=test class="pull-right btn btn-primary btn-outline btn-rounded" style="position:fixed; left:250px">Inscribirse</a> 
 	</div>
   <script src="../../scripts/scripts.js"></script>  
 </div>

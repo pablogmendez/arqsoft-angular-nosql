@@ -5,19 +5,19 @@ angular.module("yapp",["ui.router","ngAnimate"])
 .state("login",{url:"/login",parent:"base",templateUrl:"views/login.html",controller:"LoginCtrl"})
 .state("dashboard",{url:"/dashboard",parent:"base",templateUrl:"views/dashboard.html",controller:"DashboardCtrl"})
 .state("overview",{url:"/overview",parent:"dashboard",templateUrl:"views/dashboard/overview.html"})
+.state("results",{url:"/results",parent:"dashboard",templateUrl:"views/dashboard/results.html"})
+.state("registrations",{url:"/registrations",parent:"dashboard",templateUrl:"views/dashboard/registrations.html"})
 .state("reports",{url:"/reports",parent:"dashboard",templateUrl:"views/dashboard/reports.html"})}]),
 
 angular.module("yapp")
 .controller("LoginCtrl",["$scope","$location",function(r,t){r.submit=function(){return t.path("/dashboard"),!1}}]),
 angular.module("yapp").controller("DashboardCtrl",["$scope","$state",function(r,t){r.$state=t}])
 
-.controller('TodosLosLibrosCtrl', function ($scope) {
-    $scope.libros = [
-        {'titulo': 'The design of every day things', 'autor': 'Don Norman'},
-        {'titulo': 'El nombre del viento', 'autor': 'Patrik Rufus'},
-        {'titulo': 'Game of Thrones', 'autor': 'R.R. Martin'}
-    ];
+.controller('ResultsCtrl', function($scope, $http) {
+    $http.get("http://www.w3schools.com/angular/customers.php")
+    .success(function (response) {$scope.names = response.records;});
 })
+
 
 .controller('AnioCtrl', ['$scope', function($scope) {
    $scope.data = {

@@ -6,10 +6,13 @@
 				<ul class="nav nav-sidebar"> 
 					<li ng-class="{active: $state.includes('overview')}">
 						<a ui-sref=overview>Principal <span class=sr-only>(current)</span></a>
-					</li> 
+					</li>
+					<li ng-class="{active: $state.includes('registrations')}">
+						<a ui-sref=registrations>Inscripciones</a>
+					</li>  
 					<li ng-class="{active: $state.includes('reports')}">
-						<a ui-sref=reports>Inscripciones</a>
-					</li> 
+						<a ui-sref=reports>Consultas</a>
+					</li>
 				</ul> 
 			</div> 
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" ui-view=""> 

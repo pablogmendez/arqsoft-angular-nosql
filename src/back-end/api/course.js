@@ -6,8 +6,7 @@ var Course = require('../models/course.js'),
 exports.findByTerm = function(req, res, next) {
   Course.find({year: req.params.year, term: req.params.term}, function(err, courses) {
     if (err) {
-       console.log(err);
-       res.send({status: error, message: err}, 500);
+      res.send({status: error, message: err}, 500);
     }
     res.send(courses);
   });
@@ -20,25 +19,31 @@ exports.findById = function(req, res, next) {
     }, function(err, students) {
       if (err)
         return next(err);
-
-      next(null, {course: course, students: students});
+      res.send({course: course, students: students});
     });
   });
 };
 
-exports.addNewCourse = function(req, res, next) {
-  var course = new Course({
-    name: req.body.name,
-    year: req.body.year,
-    term: req.body.term,
-    students: req.body.students || []
+exports.addNewStudent = function(req, res, next) {
+  Course.findById(req.body.course, function(err, course) {
+    if (err)
+      next(err);
+    course.update({$push: {students: req.body.student}}, function(err) {
+      if (err)
+        next(err);
+    });
   });
+};
 
-  course.save(function(err) {
-    if (err) {
-      res.send({status: error, message: err}, 500);
+exports.getAll = function(req, res, next) {
+  Course.aggregate([
+      {$group: {_id: {year: '$year', term: '$term'}}},
+      {$project: {year: '$_id.year', term: '$_id.term', _id: 0}}
+    ], function (err, results) {
+      if (err) {
+        next(err);
+      }
+      res.send(results);
     }
-  });
-
-  res.send(course);
+  );
 };

@@ -1,5 +1,6 @@
 "use strict";
 
+// Router
 angular.module("yapp",["ui.router","ngAnimate"])
 .config(["$stateProvider","$urlRouterProvider",function(r,t){t.when("/dashboard","/dashboard/overview"),t.otherwise("/login"),r.state("base",{"abstract":!0,url:"",templateUrl:"views/base.html"})
 .state("login",{url:"/login",parent:"base",templateUrl:"views/login.html",controller:"LoginCtrl"})
@@ -9,55 +10,58 @@ angular.module("yapp",["ui.router","ngAnimate"])
 .state("registrations",{url:"/registrations",parent:"dashboard",templateUrl:"views/dashboard/registrations.html"})
 .state("reports",{url:"/reports",parent:"dashboard",templateUrl:"views/dashboard/reports.html"})}]),
 
+
+// Controller para el login
 angular.module("yapp")
-.controller("LoginCtrl",["$scope","$location",function(r,t){r.submit=function(){return t.path("/dashboard"),!1}}]),
-angular.module("yapp").controller("DashboardCtrl",["$scope","$state",function(r,t){r.$state=t}])
+.controller("LoginCtrl",["$scope","$location", "$rootScope",function(r,t,s){r.submit=function(){s.padron=r.padron; return t.path("/dashboard"),!1}}]),
+angular.module("yapp").controller("DashboardCtrl",["$scope","$state",function(r,t){r.$state=t}]).
 
-.controller('ResultsCtrl', function($scope, $http) {
-    $http.get("http://www.w3schools.com/angular/customers.php")
-    .success(function (response) {$scope.names = response.records;});
+
+// Controller para 
+controller('ResultsCtrl', function($scope, $http, $rootScope) {
+
+	// Obtengo los años y cuatrimestres
+	$http.get("http://localhost:3000/coursesy").success(function (response) {$scope.anio = response;});
+
+	// Le asigno año y cuatrimestre al model cuatri
+	$http.get("http://localhost:3000/courses").success(function (response2) {$scope.cuatri = response2;});
+
+	// Obtengo los años y cuatrimestres y cursos y se los asigno al model materia
+	$http.get("http://localhost:3000/coursesa").success(function (response3) {$scope.cursos = response3;});
+
+	// Funcion para buscar estudiantes inscriptos a materias
+	$scope.findStudents = function(){
+		$scope.names=new Array();
+		for(var i=0; i < $scope.materia.length; i++ ) {
+			if($scope.cursos[i].year == $scope.searchYear.year && $scope.cursos[i].term == $scope.searchTerm.term && $scope.cursos[i].name == 				$scope.searchCourse.name) {
+				for(var j=0; j < $scope.cursos[i].students.length; j++) {
+					for(var k=0; k < $scope.estudiantes.length; k++) {
+						if($scope.cursos[i].students[j]._id == $scope.estudiantes[k]._id) {
+							$scope.names.push({firstName: $scope.estudiantes[k].firstName,
+									lastName: $scope.estudiantes[k].lastName,
+									age: $scope.estudiantes[k].age,
+									phone: $scope.estudiantes[k].phone});
+						}
+					}
+				}
+				break;
+			}
+	 	}
+
+  	}; 
+
+	// Función para inscribir alumnos
+	$scope.studentsRecord = function(){
+
+		var url="http://localhost:3000/coursesp/" + $rootScope.padron;
+		$http.get(url).success(function (response) {
+
+			var dataObj = {
+				course : $scope.searchCourse.name,
+				student : response[0]._id,
+			};	
+	
+			$http.post("http://localhost:3000/" + response[0]._id +"/student", dataObj).success($scope.recordMessage="Registro exitoso").error($scope.recordMessage="Error");
+		});
+	};
 })
-
-
-.controller('AnioCtrl', ['$scope', function($scope) {
-   $scope.data = {
-    repeatSelect: null,
-    availableOptions: [
-      {id: '1', name: '2005'},
-      {id: '2', name: '2006'},
-      {id: '3', name: '2007'},
-      {id: '4', name: '2008'},
-      {id: '5', name: '2009'},
-      {id: '6', name: '2010'},
-      {id: '7', name: '2011'},
-      {id: '8', name: '2012'},
-      {id: '9', name: '2013'},
-      {id: '10', name: '2014'},
-      {id: '10', name: '2015'},
-    ],
-   };
-}])
-
-.controller('CuatriCtrl', ['$scope', function($scope) {
-   $scope.data = {
-    repeatSelect: null,
-    availableOptions: [
-      {id: '1', name: '1° Cuat.'},
-      {id: '2', name: '2° Cuat.'},
-      {id: '3', name: 'Curso de verano'},
-    ],
-   };
-}])
-
-.controller('MateriaCtrl', ['$scope', function($scope) {
-   $scope.data = {
-    repeatSelect: null,
-    availableOptions: [
-      {id: '1', name: '61.03. Análisis Matemático II A'},
-      {id: '2', name: '61.06. Probabilidad y Estadística A'},
-      {id: '3', name: '61.19. Análisis Funcional'},
-      {id: '4', name: '75.02. Algoritmos y Programación I'},
-      {id: '5', name: '75.14. Lenguajes Formales'},
-    ],
-   };
-}]);

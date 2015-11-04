@@ -1,32 +1,57 @@
+<style>
+	table, th , td  {
+		border: 1px solid grey;
+		border-collapse: collapse;
+		padding: 5px;
+	}	
+	table tr:nth-child(odd)	{
+		background-color: #f1f1f1;
+	}
+	table tr:nth-child(even) {
+		background-color: #ffffff;
+	}
+</style>
+
 <div> 
 	<h2>Consultas</h2>
-	<div class="opciones">
-		<span>Complete los parámetros de la búsqueda</span> 
+	<div class="opciones" ng-controller="ResultsCtrl">
+		<span>Seleccione los parámetros de búsqueda</span> 
 		<br><br><br>
-		<form name="parametrosBusqueda" action="#" ng-submit="submitForm()">
-			<div ng-controller="AnioCtrl">
-			<span>Seleccione Año :</span> 
-			<select name="repeatSelect" id="repeatSelect" ng-model="data.repeatSelect" style="position:fixed; left:450px">
-      				<option ng-repeat="option in data.availableOptions" value="{{option.id}}">{{option.name}}</option>
+		<div>
+    			<select ng-model="searchYear" ng-options="an.year for an in anio " style="position:fixed; left:280px">
+		        <option value="">--Año--</option>
     			</select>
-			</div>			
-			<br>
-			<div ng-controller="CuatriCtrl">
-			<span>Seleccione Cuatrimestre :</span> 
-			<select name="repeatSelect" id="repeatSelect" ng-model="data.repeatSelect" style="position:fixed; left:450px">
-      				<option ng-repeat="option in data.availableOptions" value="{{option.id}}">{{option.name}}</option>
+		</div>
+		<div>
+	    		<select ng-model="searchTerm" ng-options="cu.term for cu in cuatri | filter:searchYear" style="position:fixed; left:400px">
+		        <option value="">--Cuatrimestre--</option>
+			</select>
+		<div>
+		<div>
+			<select ng-model="searchCourse" ng-options="ma.name for ma in cursos | filter:searchYear | filter:searchTerm" style="position:fixed; left:570px">
+	        	<option value="">--Materia--</option>
     			</select>
-			</div>
-			<br>
-			<div ng-controller="MateriaCtrl">
-			<span>Seleccione Materia :</span> 
-			<select name="repeatSelect" id="repeatSelect" ng-model="data.repeatSelect" style="position:fixed; left:450px">
-      				<option ng-repeat="option in data.availableOptions" value="{{option.id}}">{{option.name}}</option>
-    			</select>
-			</div>
-			<br><br>
-			<a ui-sref=results class="pull-right btn btn-primary btn-outline btn-rounded" style="position:fixed; left:250px">Buscar inscripciones</a> 
-		</form>
+		</div>
+		<button ng-click="findStudents()" class="pull-right btn btn-primary btn-outline btn-rounded" style="position:fixed; left:60%; top:26%">Buscar</button>
+
+
+		<br><br><br><br>
+		<table style="position:fixed; left:280px">
+			<thead>
+         			<tr>
+           				<th>Nombre</th>
+           				<th>Apellido</th>
+          				<th>Edad</th>
+          				<th>Teléfono</th>
+        			</tr>
+      			</thead>
+			<tr ng-repeat="x in names">
+				<td>{{ $index + 1 }}</td>
+				<td>{{ x.Name }}</td>
+				<td>{{ x.Country }}</td>
+				<td>{{ $index + 1 }}</td>
+			</tr>
+		</table>
 	</div>
-  <script src="../../scripts/scripts.js"></script>  
+	<script src="../../scripts/scripts.js"></script>  
 </div>

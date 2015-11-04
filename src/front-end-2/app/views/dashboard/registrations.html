@@ -1,32 +1,28 @@
 <div> 
-	<h2>Inscripciones</h2>
-	<div class="opciones">
+	<h2>Inscripciones </h2>
+	<div class="opciones" ng-controller="ResultsCtrl">
 		<span>Complete los datos de inscripcion</span> 
 		<br><br><br>
-		<form name="parametrosInscripcion" action="#" ng-submit="submitForm()">
-			<div ng-controller="AnioCtrl">
-			<span>Seleccione Año :</span> 
-			<select name="repeatSelect" id="repeatSelect" ng-model="data.repeatSelect" style="position:fixed; left:450px">
-      				<option ng-repeat="option in data.availableOptions" value="{{option.id}}">{{option.name}}</option>
-    			</select>
-			</div>			
-			<br>
-			<div ng-controller="CuatriCtrl">
-			<span>Seleccione Cuatrimestre :</span> 
-			<select name="repeatSelect" id="repeatSelect" ng-model="data.repeatSelect" style="position:fixed; left:450px">
-      				<option ng-repeat="option in data.availableOptions" value="{{option.id}}">{{option.name}}</option>
-    			</select>
-			</div>
-			<br>
-			<div ng-controller="MateriaCtrl">
-			<span>Seleccione Materia :</span> 
-			<select name="repeatSelect" id="repeatSelect" ng-model="data.repeatSelect" style="position:fixed; left:450px">
-      				<option ng-repeat="option in data.availableOptions" value="{{option.id}}">{{option.name}}</option>
-    			</select>
-			</div>
-			<br><br>
-		</form>
-			<a ui-sref=test class="pull-right btn btn-primary btn-outline btn-rounded" style="position:fixed; left:250px">Inscribirse</a> 
+			<div >
+				<select ng-model="searchYear" ng-options="ye.year for ye in anio" style="position:fixed; left:280px">
+      					<option value="">--Ano--</option>
+    				</select>
+			</div><br><br>			
+			<div>
+				<select ng-model="searchTerm" ng-options="te.term for te in cuatri |  filter: searchYear" style="position:fixed; left:280px">
+      					<option value="">--Cuatrimestre--</option>
+    				</select>
+			</div><br><br>
+			<div >
+				<select ng-model="searchCourse" ng-options="cu.name for cu in cursos |  filter: searchYear | filter: searchTerm" style="position:fixed; left:280px">
+      					<option value="">--Cursos--</option>
+    				</select>
+			</div><br><br>
+			<button ng-click="studentsRecord()" class="pull-right btn btn-primary btn-outline btn-rounded" style="position:fixed; left:280px">Inscribir</button>
+			<br><br><br>
+			<span style="color:red">{{recordMessage}} </span>
+			<br><br><br>
+		</div>
 	</div>
   <script src="../../scripts/scripts.js"></script>  
 </div>

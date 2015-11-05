@@ -39,6 +39,7 @@
 		<table style="position:fixed; left:280px">
 			<thead>
          			<tr>
+           				<th>Padrón</th>
            				<th>Nombre</th>
            				<th>Apellido</th>
           				<th>Edad</th>
@@ -46,10 +47,11 @@
         			</tr>
       			</thead>
 			<tr ng-repeat="x in names">
-				<td>{{ $index + 1 }}</td>
-				<td>{{ x.Name }}</td>
-				<td>{{ x.Country }}</td>
-				<td>{{ $index + 1 }}</td>
+				<td>{{ x.padron }}</td>
+				<td>{{ x.firstName }}</td>
+				<td>{{ x.lastName }}</td>
+				<td>{{ x.age }}</td>
+				<td>{{ x.phone }}</td>
 			</tr>
 		</table>
 	</div>

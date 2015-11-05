@@ -31,22 +31,25 @@ controller('ResultsCtrl', function($scope, $http, $rootScope) {
 
 	// Funcion para buscar estudiantes inscriptos a materias
 	$scope.findStudents = function(){
-		$scope.names=new Array();
-		for(var i=0; i < $scope.materia.length; i++ ) {
-			if($scope.cursos[i].year == $scope.searchYear.year && $scope.cursos[i].term == $scope.searchTerm.term && $scope.cursos[i].name == 				$scope.searchCourse.name) {
-				for(var j=0; j < $scope.cursos[i].students.length; j++) {
-					for(var k=0; k < $scope.estudiantes.length; k++) {
-						if($scope.cursos[i].students[j]._id == $scope.estudiantes[k]._id) {
-							$scope.names.push({firstName: $scope.estudiantes[k].firstName,
-									lastName: $scope.estudiantes[k].lastName,
-									age: $scope.estudiantes[k].age,
-									phone: $scope.estudiantes[k].phone});
-						}
-					}
-				}
-				break;
-			}
-	 	}
+		$http.get("http://localhost:3000/courses/" + $scope.searchCourse._id).success(function (response) {
+			$scope.names = response.students;
+		});
+//		$scope.names=new Array();
+//		for(var i=0; i < $scope.materia.length; i++ ) {
+//			if($scope.cursos[i].year == $scope.searchYear.year && $scope.cursos[i].term == $scope.searchTerm.term && $scope.cursos[i].name == 				$scope.searchCourse.name) {
+//				for(var j=0; j < $scope.cursos[i].students.length; j++) {
+//					for(var k=0; k < $scope.estudiantes.length; k++) {
+//						if($scope.cursos[i].students[j]._id == $scope.estudiantes[k]._id) {
+//							$scope.names.push({firstName: $scope.estudiantes[k].firstName,
+//									lastName: $scope.estudiantes[k].lastName,
+//									age: $scope.estudiantes[k].age,
+//									phone: $scope.estudiantes[k].phone});
+//						}
+//					}
+//				}
+//				break;
+//			}
+//	 	}
 
   	}; 
 

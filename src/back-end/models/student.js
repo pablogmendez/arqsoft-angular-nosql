@@ -4,6 +4,7 @@ var mongoose = require('mongoose'),
 	Schema = mongoose.Schema;
 
 var studentSchema = new Schema({
+  padron: {type: String},
   firstName: {type: String},
   lastName: {type: String},
   age: {type: Number},

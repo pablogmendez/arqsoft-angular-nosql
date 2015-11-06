@@ -1,7 +1,8 @@
 "use strict";
 
 var Course = require('../models/course.js'),
-    Student = require('../models/student.js');
+    Student = require('../models/student.js'),
+    mongoose = require('mongoose');
 
 exports.findByTerm = function(req, res, next) {
 res.header("Access-Control-Allow-Origin", "*");
@@ -31,12 +32,20 @@ res.header("Access-Control-Allow-Origin", "*");
 exports.addNewStudent = function(req, res, next) {
 res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  Course.findById(req.body.course, function(err, course) {
-    if (err)
-      next(err);
-    course.update({$push: {students: req.body.student}}, function(err) {
-      if (err)
-        next(err);
+//$http.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+//$http.defaults.headers.common['Access-Control-Allow-Methods'] = 'POST, GET, OPTIONS, PUT';
+//$http.defaults.headers.common['Access-Control-Allow-Headers'] = 'Origin, X-Request-With, Content-Type, Accept';
+//res.setHeader("Access-Control-Allow-Origin", "*");
+//  res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+console.log(req.body.student);
+ Course.findById(req.params.id, function(err, course) {
+console.log(course);
+   if (err)
+     next(err);
+   Course.update({_id:course}, {$push: {students: new mongoose.Types.ObjectId(req.body.student)}}, function(err) {
+     if (err)
+       next(err);
+      res.send();
     });
   });
 };

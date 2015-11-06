@@ -55,16 +55,37 @@ controller('ResultsCtrl', function($scope, $http, $rootScope) {
 
 	// Función para inscribir alumnos
 	$scope.studentsRecord = function(){
+		$http.get("http://localhost:3000/coursesp/" + $rootScope.padron).success(function (response) {
+		var dataObj = {
+			student : response[0]._id,
+		};	
 
-		var url="http://localhost:3000/coursesp/" + $rootScope.padron;
-		$http.get(url).success(function (response) {
+		$http.put("http://localhost:3000/course/"+ $scope.searchCourse._id + "/students",dataObj).success(function(data, status, headers, config) {
+		         // this isn't happening:
+		        alert("aaaa");
+		    }).error(function(data, status, headers, config) {
+		         // this isn't happening:
+		     alert('vcvcvc');
+		    });
+	});
 
-			var dataObj = {
-				course : $scope.searchCourse.name,
-				student : response[0]._id,
-			};	
-	
-			$http.post("http://localhost:3000/" + response[0]._id +"/student", dataObj).success($scope.recordMessage="Registro exitoso").error($scope.recordMessage="Error");
-		});
+//		$http.put("http://localhost:3000/course/"+ $scope.searchCourse._id + "/students",dataObj).success(function(data, status, headers, config) {
+		         // this isn't happening:
+//		        alert("aaaa");
+//		    }).error(function(data, status, headers, config) {
+		         // this isn't happening:
+//		     alert('vcvcvc');
+//		    });
+
+//		var url="http://localhost:3000/coursesp/" + $rootScope.padron;
+//		$http.get(url).success(function (response) {
+//
+//			var dataObj = {
+//				course : $scope.searchCourse.name,
+//				student : response[0]._id,
+//			};	
+//	
+//			$http.post("http://localhost:3000/" + response[0]._id +"/student", dataObj).success($scope.recordMessage="Registro exitoso").error($scope.recordMessage="Error");
+//		});
 	};
 })

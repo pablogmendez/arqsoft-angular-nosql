@@ -14,25 +14,25 @@
 
 <div> 
 	<h2>Consultas</h2>
-	<div class="opciones" ng-controller="ResultsCtrl">
+	<div class="opciones">
 		<span>Seleccione los parámetros de búsqueda</span> 
 		<br><br><br>
 		<div>
-    			<select ng-model="searchYear" ng-options="an.year for an in anio " style="position:fixed; left:280px">
-		        <option value="">--Año--</option>
-    			</select>
+			<select ng-model="searchYear" ng-options="year for year in model.years" style="position:fixed; left:280px">
+	        <option value="">--Año--</option>
+			</select>
 		</div>
 		<div>
-	    		<select ng-model="searchTerm" ng-options="cu.term for cu in cuatri | filter:searchYear" style="position:fixed; left:400px">
-		        <option value="">--Cuatrimestre--</option>
+    		<select ng-model="searchTerm" ng-options="item.term for item in model.terms | filter:searchYear | unique: 'term'" style="position:fixed; left:400px">
+	        <option value="">--Cuatrimestre--</option>
 			</select>
 		<div>
 		<div>
-			<select ng-model="searchCourse" ng-options="ma.name for ma in cursos | filter:searchYear | filter:searchTerm" style="position:fixed; left:570px">
-	        	<option value="">--Materia--</option>
-    			</select>
+			<select ng-show="searchYear && searchTerm" ng-model="searchCourse" ng-options="course.name for course in model.courses | filter:searchYear | filter:searchTerm" style="position:fixed; left:570px">
+        	<option value="">--Materia--</option>
+			</select>
 		</div>
-		<button ng-click="findStudents()" class="pull-right btn btn-primary btn-outline btn-rounded" style="position:fixed; left:60%; top:26%">Buscar</button>
+		<button ng-click="handlers.findStudents()" class="pull-right btn btn-primary btn-outline btn-rounded" style="position:fixed; left:60%; top:26%">Buscar</button>
 
 
 		<br><br><br><br>
@@ -47,7 +47,7 @@
         			</tr>
       			</thead>
 			<tr ng-repeat="x in names">
-				<td>{{ x.padron }}</td>
+				<td>{{ x.record }}</td>
 				<td>{{ x.firstName }}</td>
 				<td>{{ x.lastName }}</td>
 				<td>{{ x.age }}</td>
@@ -55,5 +55,4 @@
 			</tr>
 		</table>
 	</div>
-	<script src="../../scripts/scripts.js"></script>  
 </div>

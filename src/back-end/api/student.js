@@ -1,20 +1,11 @@
 "use strict";
 
-exports.addNewStudent = function(req, res, next) {
-res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  var student = new Student({
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    age: req.body.age,
-    phone: req.body.phone
-  });
+var Student = require('../models/student.js');
 
-  student.save(function(err) {
-    if (err) {
-      res.send({status: error, message: err}, 500);
-    }
+exports.login = function(req, res, next) {
+  Student.findOne({record: req.body.record}, function(err, student) {
+    if (!student)
+      res.send({status: 'error'}, 401);
+    res.send(student);
   });
-
-  res.send(student);
 };

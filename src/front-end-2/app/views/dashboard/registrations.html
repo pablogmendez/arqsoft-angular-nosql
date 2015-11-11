@@ -1,28 +1,27 @@
 <div> 
 	<h2>Inscripciones </h2>
-	<div class="opciones" ng-controller="ResultsCtrl">
+	<div class="opciones">
 		<span>Complete los datos de inscripcion</span> 
 		<br><br><br>
-			<div >
-				<select ng-model="searchYear" ng-options="ye.year for ye in anio" style="position:fixed; left:280px">
+			<div>
+				<select ng-model="searchYear" ng-options="item for item in model.years" style="position:fixed; left:280px">
       					<option value="">--Ano--</option>
     				</select>
 			</div><br><br>			
 			<div>
-				<select ng-model="searchTerm" ng-options="te.term for te in cuatri |  filter: searchYear" style="position:fixed; left:280px">
+				<select ng-model="searchTerm" ng-options="item.term for item in model.terms | filter: searchYear | unique: 'term'" style="position:fixed; left:280px">
       					<option value="">--Cuatrimestre--</option>
     				</select>
 			</div><br><br>
-			<div >
-				<select ng-model="searchCourse" ng-options="cu.name for cu in cursos |  filter: searchYear | filter: searchTerm" style="position:fixed; left:280px">
+			<div>
+				<select ng-model="searchCourse" ng-options="course.name for course in model.courses | filter: searchYear | filter: searchTerm" style="position:fixed; left:280px">
       					<option value="">--Cursos--</option>
     				</select>
 			</div><br><br>
-			<button ng-click="studentsRecord()" class="pull-right btn btn-primary btn-outline btn-rounded" style="position:fixed; left:280px">Inscribir</button>
+			<button ng-click="handlers.studentsRecord()" class="pull-right btn btn-primary btn-outline btn-rounded" style="position:fixed; left:280px">Inscribir</button>
 			<br><br><br>
 			<span style="color:red">{{recordMessage}} </span>
 			<br><br><br>
 		</div>
 	</div>
-  <script src="../../scripts/scripts.js"></script>  
 </div>
